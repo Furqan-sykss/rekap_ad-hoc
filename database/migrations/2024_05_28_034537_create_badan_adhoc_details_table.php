@@ -8,9 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('badan_adhoc_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama');
+            $table->string('posisi');
+            $table->string('pekerjaan');
+            $table->string('pendidikan_terakhir');
+            $table->string('program_studi');
             $table->string('email')->unique();
             $table->string('nik', 16)->unique();
             $table->string('tempat_lahir');
@@ -18,7 +22,7 @@ return new class extends Migration
             $table->string('no_bpjs_kesehatan')->unique();
             $table->string('no_bpjs_ketenagakerjaan')->unique();
             $table->string('npwp')->unique();
-            $table->string('no_hp');
+            $table->string('no_hp')->unique();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->text('alamat');
             $table->string('provinsi');
@@ -26,15 +30,12 @@ return new class extends Migration
             $table->string('kecamatan');
             $table->string('kelurahan');
             $table->string('agama');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('badan_adhoc_details');
     }
 };

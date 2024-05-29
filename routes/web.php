@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BadanAdhocDetailController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
 // Rute untuk register
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
@@ -22,9 +23,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('index'); // Mengembalikan tampilan index
     })->name('index');
-    // Rute lainnya yang terkait dengan halaman utama, seperti upload, edit, update, dll.
-});
 
+    Route::get('/detail_badan_adhoc', [BadanAdhocDetailController::class, 'index'])->name('badan_adhoc_details.index');
+    Route::get('/detail_badan_adhoc/create', [BadanAdhocDetailController::class, 'create'])->name('badan_adhoc_details.create');
+    Route::post('/detail_badan_adhoc', [BadanAdhocDetailController::class, 'store'])->name('badan_adhoc_details.store');
+    Route::delete('/detail_badan_adhoc/{id}', [BadanAdhocDetailController::class, 'destroy'])->name('badan_adhoc_details.destroy');
+});
 
 // Rute untuk logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
