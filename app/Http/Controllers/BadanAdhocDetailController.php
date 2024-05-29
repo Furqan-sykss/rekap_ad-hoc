@@ -31,7 +31,10 @@ class BadanAdhocDetailController extends Controller
 
         $details = $query->get();
 
-        return view('detailadhoc.index', compact('details'));
+        $totalDetailsCount = BadanAdhocDetail::count();
+        $filteredDetailsCount = $details->count();
+
+        return view('detailadhoc.index', compact('details', 'totalDetailsCount', 'filteredDetailsCount'));
     }
 
     public function create()
