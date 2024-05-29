@@ -7,9 +7,30 @@ use App\Models\BadanAdhocDetail;
 
 class BadanAdhocDetailController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $details = BadanAdhocDetail::all();
+
+        $query = BadanAdhocDetail::query();
+
+        if ($request->filled('posisi')) {
+            $query->where('posisi', $request->posisi);
+        }
+
+        if ($request->filled('kabupaten_kota')) {
+            $query->where('kabupaten_kota', $request->kabupaten_kota);
+        }
+
+        if ($request->filled('kecamatan')) {
+            $query->where('kecamatan', $request->kecamatan);
+        }
+
+        if ($request->filled('kelurahan')) {
+            $query->where('kelurahan', $request->kelurahan);
+        }
+
+        $details = $query->get();
+
         return view('detailadhoc.index', compact('details'));
     }
 

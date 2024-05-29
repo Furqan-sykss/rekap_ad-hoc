@@ -229,7 +229,7 @@
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <a href="/" class="sidebar-link">
                     <i class="lni lni-user"></i>
                     <span>Beranda</span>
                 </a>
@@ -253,12 +253,7 @@
                     <span>Hubungi kami</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
-                    <i class="lni lni-cog"></i>
-                    <span>Pengumuman</span>
-                </a>
-            </li>
+
         </ul>
         <div class="sidebar-footer">
             <form action="{{ route('logout') }}" method="POST">
