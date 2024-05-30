@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
     <div class="container-fluid">
         <div class="col-12">
             <div class="row">
@@ -72,7 +71,7 @@
         </div> --}}
 
 
-        <div class="card"style="background-color: #0e2238;">
+        <div class="card"style="background-color: #0e2238;  border-radius: 15px; padding: 20px;">
             <div class="row  text-light bg-rounded-full">
                 <div class="col-md-12">
                     <h5>Total Keseluruhan Data: {{ $totalDetailsCount }}</h5>
@@ -80,7 +79,7 @@
                 <div class="col-md-12">
                     <h5>Data yang Dipilih: {{ $filteredDetailsCount }}</h5>
                 </div>
-                <div class="col-md-6 mt-3">
+                <div class="col-md-6 mt-3 ">
                     <button onclick="window.location.href='{{ route('badan_adhoc_details.index') }}'"
                         class="btn btn-secondary">Refresh Page</button>
                 </div>
