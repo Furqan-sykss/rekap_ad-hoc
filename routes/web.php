@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/detail_badan_adhoc/create', [BadanAdhocDetailController::class, 'create'])->name('badan_adhoc_details.create');
     Route::post('/detail_badan_adhoc', [BadanAdhocDetailController::class, 'store'])->name('badan_adhoc_details.store');
     Route::delete('/detail_badan_adhoc/{id}', [BadanAdhocDetailController::class, 'destroy'])->name('badan_adhoc_details.destroy');
+    Route::get('/charts/badan_adhoc', [BadanAdhocDetailController::class, 'chart'])->name('charts.badan_adhoc');
 });
 
 // Rute untuk logout

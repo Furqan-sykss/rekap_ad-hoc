@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BadanAdhocDetail;
+use Illuminate\Support\Facades\DB;
 
 class BadanAdhocDetailController extends Controller
 {
@@ -83,5 +84,35 @@ class BadanAdhocDetailController extends Controller
         $detail->delete();
 
         return redirect()->route('badan_adhoc_details.index')->with('success', 'Detail badan ad/hoc berhasil dihapus');
+    }
+
+
+
+    public function chart(Request $request)
+    {
+        $query = BadanAdhocDetail::query();
+
+        if ($request->filled('posisi')) {
+            $query->where('posisi', $request->posisi);
+        }
+
+        $cities = $query->select('kabupaten_kota', DB::raw('count(*) as total'))
+            ->groupBy('kabupaten_kota')
+            ->pluck('total', 'kabupaten_kota')->all();
+
+        $kecamatanData = $query->select(
+            'kabupaten_kota',
+            'kecamatan',
+            'kelurahan',
+            DB::raw('SUM(CASE WHEN posisi = "PPK" THEN 1 ELSE 0 END) as total_ppk'),
+            DB::raw('SUM(CASE WHEN posisi = "PPS" THEN 1 ELSE 0 END) as total_pps')
+        )
+            ->groupBy('kabupaten_kota', 'kecamatan', 'kelurahan')
+            ->get();
+
+        $positions = ['' => 'Semua', 'PPK' => 'PPK', 'PPS' => 'PPS'];
+        $selectedPosition = $request->input('posisi', '');
+
+        return view('charts.badan_adhoc', compact('cities', 'kecamatanData', 'positions', 'selectedPosition'));
     }
 }
