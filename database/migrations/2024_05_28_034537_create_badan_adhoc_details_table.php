@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('posisi');
-            $table->string('tps');
+            $table->string('tps')->after('kelurahan');
             $table->string('pekerjaan');
             $table->string('pendidikan_terakhir');
             $table->string('program_studi');
@@ -37,6 +37,7 @@ return new class extends Migration
 
     public function down(): void
     {
+
         Schema::dropIfExists('badan_adhoc_details');
     }
 };

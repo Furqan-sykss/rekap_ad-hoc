@@ -48,6 +48,13 @@
                         <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label>TPS</label>
+                    <select name="tps" id="tps" class="form-control">
+                        <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
+                    </select>
+                </div>
+
                 <div class="col-md-12 mt-2 ">
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </div>
@@ -514,14 +521,13 @@
                 const kabupatenKota = $(this).val();
                 const kecamatanSelect = $('#kecamatan');
                 const kelurahanSelect = $('#kelurahan');
+                const tpsSelect = $('#tps');
 
                 kecamatanSelect.empty().append('<option value="">Pilih Kecamatan</option>');
                 kelurahanSelect.empty().append('<option value="">Pilih Kelurahan</option>');
+                tpsSelect.empty().append('<option value="">Pilih TPS</option>');
 
-                console.log("Kabupaten/Kota selected:", kabupatenKota); // Debugging line
                 if (kecamatanOptions[kabupatenKota]) {
-                    console.log("Kecamatan options found:", kecamatanOptions[
-                        kabupatenKota]); // Debugging line
                     kecamatanOptions[kabupatenKota].forEach(function(kecamatan) {
                         kecamatanSelect.append(new Option(kecamatan, kecamatan));
                     });
@@ -531,14 +537,27 @@
             $('#kecamatan').on('change', function() {
                 const kecamatan = $(this).val();
                 const kelurahanSelect = $('#kelurahan');
+                const tpsSelect = $('#tps');
 
                 kelurahanSelect.empty().append('<option value="">Pilih Kelurahan</option>');
+                tpsSelect.empty().append('<option value="">Pilih TPS</option>');
 
-                console.log("Kecamatan selected:", kecamatan); // Debugging line
                 if (kelurahanOptions[kecamatan]) {
-                    console.log("Kelurahan options found:", kelurahanOptions[kecamatan]); // Debugging line
                     kelurahanOptions[kecamatan].forEach(function(kelurahan) {
                         kelurahanSelect.append(new Option(kelurahan, kelurahan));
+                    });
+                }
+            });
+
+            $('#kelurahan').on('change', function() {
+                const kelurahan = $(this).val();
+                const tpsSelect = $('#tps');
+
+                tpsSelect.empty().append('<option value="">Pilih TPS</option>');
+
+                if (tpsOptions[kelurahan]) {
+                    tpsOptions[kelurahan].forEach(function(tps) {
+                        tpsSelect.append(new Option(tps, tps));
                     });
                 }
             });
@@ -548,6 +567,7 @@
                 const currentKabupatenKota = '{{ request('kabupaten_kota') }}';
                 const currentKecamatan = '{{ request('kecamatan') }}';
                 const currentKelurahan = '{{ request('kelurahan') }}';
+                const currentTps = '{{ request('tps') }}';
 
                 $('#kabupaten_kota').val(currentKabupatenKota).trigger('change');
                 if (currentKecamatan) {
@@ -555,33 +575,16 @@
                         $('#kecamatan').val(currentKecamatan).trigger('change');
                         if (currentKelurahan) {
                             setTimeout(function() {
-                                $('#kelurahan').val(currentKelurahan);
+                                $('#kelurahan').val(currentKelurahan).trigger('change');
+                                if (currentTps) {
+                                    setTimeout(function() {
+                                        $('#tps').val(currentTps);
+                                    }, 500);
+                                }
                             }, 500);
                         }
                     }, 500);
                 }
-            @endif
-
-            // Fungsi untuk memperbarui pilihan TPS berdasarkan kelurahan yang dipilih
-            $('#kelurahan').on('change', function() {
-                const kelurahan = $(this).val();
-                const tpsSelect = $('#tps');
-
-                tpsSelect.empty().append('<option value="">Pilih TPS</option>');
-
-                console.log("Kelurahan selected:", kelurahan); // Debugging line
-                if (tpsOptions[kelurahan]) {
-                    console.log("TPS options found:", tpsOptions[kelurahan]); // Debugging line
-                    tpsOptions[kelurahan].forEach(function(tps) {
-                        tpsSelect.append(new Option(tps, tps));
-                    });
-                }
-            });
-
-            // Inisialisasi awal jika ada filter saat halaman dimuat
-            @if (request('kelurahan'))
-                const currentKelurahan = '{{ request('kelurahan') }}';
-                $('#kelurahan').val(currentKelurahan).trigger('change');
             @endif
         });
     </script>

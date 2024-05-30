@@ -29,6 +29,10 @@ class BadanAdhocDetailController extends Controller
             $query->where('kelurahan', $request->kelurahan);
         }
 
+        if ($request->filled('tps')) {
+            $query->where('tps', $request->tps);
+        }
+
         $details = $query->get();
 
         $totalDetailsCount = BadanAdhocDetail::count();
