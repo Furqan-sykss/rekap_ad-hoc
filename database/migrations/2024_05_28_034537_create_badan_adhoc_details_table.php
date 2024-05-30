@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('posisi');
+            $table->string('tps');
             $table->string('pekerjaan');
             $table->string('pendidikan_terakhir');
             $table->string('program_studi');

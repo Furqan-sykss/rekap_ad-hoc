@@ -47,6 +47,7 @@ class BadanAdhocDetailController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'posisi' => 'required|in:PPK,PPS',
+            'tps' => 'required|string|max:100',
             'pekerjaan' => 'required|string|max:255',
             'pendidikan_terakhir' => 'required|string|max:255',
             'program_studi' => 'required|string|max:255',

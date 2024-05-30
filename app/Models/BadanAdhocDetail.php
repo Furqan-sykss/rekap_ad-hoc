@@ -20,6 +20,7 @@ class BadanAdhocDetail extends Model
     protected $fillable = [
         'nama',
         'posisi',
+        'tps',
         'pekerjaan',
         'pendidikan_terakhir',
         'program_studi',
