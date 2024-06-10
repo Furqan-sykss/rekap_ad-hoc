@@ -115,4 +115,42 @@ class BadanAdhocDetailController extends Controller
 
         return view('charts.badan_adhoc', compact('cities', 'kecamatanData', 'positions', 'selectedPosition'));
     }
+
+    public function edit($id)
+    {
+        $detail = BadanAdhocDetail::findOrFail($id);
+        return view('detailadhoc.edit', compact('detail'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'posisi' => 'required|in:PPK,PPS',
+            'tps' => 'required|string|max:100',
+            'pekerjaan' => 'required|string|max:255',
+            'pendidikan_terakhir' => 'required|string|max:255',
+            'program_studi' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:badan_adhoc_details,email,' . $id,
+            'nik' => 'required|string|size:16|unique:badan_adhoc_details,nik,' . $id,
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'no_bpjs_kesehatan' => 'required|string|unique:badan_adhoc_details,no_bpjs_kesehatan,' . $id,
+            'no_bpjs_ketenagakerjaan' => 'required|string|unique:badan_adhoc_details,no_bpjs_ketenagakerjaan,' . $id,
+            'npwp' => 'required|string|unique:badan_adhoc_details,npwp,' . $id,
+            'no_hp' => 'required|string|unique:badan_adhoc_details,no_hp,' . $id,
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'alamat' => 'required|string',
+            'provinsi' => 'required|string',
+            'kabupaten_kota' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kelurahan' => 'required|string',
+            'agama' => 'required|string|max:255',
+        ]);
+
+        $detail = BadanAdhocDetail::findOrFail($id);
+        $detail->update($request->all());
+
+        return redirect()->route('badan_adhoc_details.index')->with('success', 'Detail badan ad/hoc berhasil diperbarui');
+    }
 }

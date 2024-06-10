@@ -12,71 +12,102 @@
 
 <body>
 
-    <div class="container" style="margin-top: 50px">
-        <div class="row">
-            <div class="col-md-5 offset-md-3">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <div class="card">
+                    <div class="card-header">Register</div>
                     <div class="card-body">
-                        <label>REGISTER</label>
-                        <hr>
+                        <!-- Display error messages -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <form method="POST" action="{{ route('register.store') }}">
                             @csrf
 
                             <div class="form-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" class="form-control" name="nama_lengkap"
-                                    placeholder="Masukkan Nama Lengkap">
+                                <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label>Alamat Email</label>
-                                <input type="email" class="form-control" name="email"
-                                    placeholder="Masukkan Alamat Email">
+                                <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Konfirmasi Password</label>
+                                <input type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Level</label>
+                                <select class="form-control" name="level" id="level" required>
+                                    <option value="" disabled selected>Silahkan pilih Level</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Operator Kabko</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label>NIK</label>
-                                <input type="text" class="form-control" name="nik"
-                                    placeholder="Masukkan NIK (16 angka)">
+                                <input type="text" class="form-control" name="nik" value="{{ old('nik') }}"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label>Tempat Lahir</label>
                                 <input type="text" class="form-control" name="tempat_lahir"
-                                    placeholder="Masukkan Tempat Lahir">
+                                    value="{{ old('tempat_lahir') }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
-                                <input type="date" class="form-control" name="tanggal_lahir">
+                                <input type="date" class="form-control" name="tanggal_lahir"
+                                    value="{{ old('tanggal_lahir') }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label>No. BPJS Kesehatan</label>
                                 <input type="text" class="form-control" name="no_bpjs_kesehatan"
-                                    placeholder="Masukkan No. BPJS Kesehatan">
+                                    value="{{ old('no_bpjs_kesehatan') }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label>No. BPJS Ketenagakerjaan</label>
                                 <input type="text" class="form-control" name="no_bpjs_ketenagakerjaan"
-                                    placeholder="Masukkan No. BPJS Ketenagakerjaan">
+                                    value="{{ old('no_bpjs_ketenagakerjaan') }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label>NPWP</label>
-                                <input type="text" class="form-control" name="npwp" placeholder="Masukkan NPWP">
+                                <input type="text" class="form-control" name="npwp" value="{{ old('npwp') }}"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label>No. HP</label>
-                                <input type="text" class="form-control" name="no_hp" placeholder="Masukkan No. HP">
+                                <input type="text" class="form-control" name="no_hp" value="{{ old('no_hp') }}"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label>Jenis Kelamin</label>
-                                <select class="form-control" name="jenis_kelamin">
+                                <select class="form-control" name="jenis_kelamin" required>
                                     <option value="Laki-laki">Laki-laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
@@ -84,12 +115,13 @@
 
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" name="alamat" placeholder="Masukkan Alamat"></textarea>
+                                <textarea class="form-control" name="alamat" required>{{ old('alamat') }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Provinsi</label>
-                                <select class="form-control" name="provinsi" id="provinsi">
+                                <select class="form-control" value="{{ old('provinsi') }}" name="provinsi"
+                                    id="provinsi">
                                     <option value="Aceh">Aceh</option>
                                     <!-- Tambahkan provinsi lain jika diperlukan -->
                                 </select>
@@ -97,7 +129,8 @@
 
                             <div class="form-group">
                                 <label>Kabupaten/Kota</label>
-                                <select class="form-control" name="kabupaten_kota" id="kabupaten_kota">
+                                <select class="form-control" value="{{ old('kabupaten_kota') }}" name="kabupaten_kota"
+                                    id="kabupaten_kota">
                                     <option value="Banda Aceh">Banda Aceh</option>
                                     <option value="Lhokseumawe">Lhokseumawe</option>
                                     <option value="Langsa">Langsa</option>
@@ -108,56 +141,91 @@
 
                             <div class="form-group">
                                 <label>Kecamatan</label>
-                                <select class="form-control" name="kecamatan" id="kecamatan">
+                                <select class="form-control" value="{{ old('kecamatan') }}" name="kecamatan"
+                                    id="kecamatan">
                                     <!-- Kecamatan akan diisi dengan JavaScript berdasarkan kabupaten/kota yang dipilih -->
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Kelurahan</label>
-                                <select class="form-control" name="kelurahan" id="kelurahan">
+                                <select class="form-control" value="{{ old('kelurahan') }}" name="kelurahan"
+                                    id="kelurahan">
                                     <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Agama</label>
-                                <select class="form-control" name="agama">
-                                    <option value="Islam">Islam</option>
-                                    <option value="Kristen">Kristen</option>
-                                    <option value="Katolik">Katolik</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Buddha">Buddha</option>
-                                    <option value="Konghucu">Konghucu</option>
-                                </select>
+                                <input type="text" class="form-control" name="agama"
+                                    value="{{ old('agama') }}" required>
                             </div>
 
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="password"
-                                    placeholder="Masukkan Password">
+                            <div id="admin_fields" style="display: none;">
+                                <div class="form-group">
+                                    <label>Provinsi Wilayah Kerja</label>
+                                    <select class="form-control" value="{{ old('provinsi_wilayah_kerja') }}"
+                                        name="provinsi_wilayah_kerja" id="provinsi_wilayah_kerja">
+                                        <option value="" disabled selected>Pilih Provinsi</option>
+                                        <option value="Aceh">Aceh</option>
+                                        <!-- Add other provinces if needed -->
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Konfirmasi Password</label>
-                                <input type="password" class="form-control" name="password_confirmation"
-                                    placeholder="Konfirmasi Password">
+                            <div id="operator_fields" style="display: none;">
+                                <div class="form-group">
+                                    <label>Provinsi Wilayah Kerja</label>
+                                    <select class="form-control" value="{{ old('provinsi_wilayah_kerja') }}"
+                                        name="provinsi_wilayah_kerja" id="provinsi_wilayah_kerja">
+                                        <option value="" disabled selected>Pilih Provinsi</option>
+                                        <option value="Aceh">Aceh</option>
+                                        <!-- Add other provinces if needed -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kabupaten/Kota Wilayah Kerja</label>
+                                    <select class="form-control" value="{{ old('kabko_wilayah_kerja') }}"
+                                        name="kabko_wilayah_kerja" id="kabko_wilayah_kerja">
+                                        <option value="" disabled selected>Pilih Kabupaten/Kota</option>
+                                        <option value="Banda Aceh">Banda Aceh</option>
+                                        <option value="Lhokseumawe">Lhokseumawe</option>
+                                        <option value="Langsa">Langsa</option>
+                                        <option value="Sabang">Sabang</option>
+                                        <!-- Tambahkan kabupaten/kota lain di Aceh -->
+                                    </select>
+                                </div>
                             </div>
 
                             <button type="submit"
                                 class="mt-3 btn btn-register btn-block btn-success">REGISTER</button>
                         </form>
 
+                        <div class="text-center" style="margin-top: 15px">
+                            Sudah punya akun? <a href="{{ route('login') }}">Silahkan Login</a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="text-center" style="margin-top: 15px">
-                    Sudah punya akun? <a href="{{ route('login') }}">Silahkan Login</a>
-                </div>
-
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('level').addEventListener('change', function() {
+            var adminFields = document.getElementById('admin_fields');
+            var operatorFields = document.getElementById('operator_fields');
+            if (this.value == '1') {
+                adminFields.style.display = 'block';
+                operatorFields.style.display = 'none';
+            } else if (this.value == '2') {
+                adminFields.style.display = 'none';
+                operatorFields.style.display = 'block';
+            } else {
+                adminFields.style.display = 'none';
+                operatorFields.style.display = 'none';
+            }
+        });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -232,7 +300,22 @@
             "Sukamakmue": ["Batee Shok", "Beurawang", "Iboih", "Keuneukai", "Paya", "Paya Seunara"]
         };
 
+
         $(document).ready(function() {
+
+            $('#provinsi_wilayah_kerja').on('change', function() {
+                const selectedProvinsi = $(this).val();
+                const kabkoSelect = $('#kabko_wilayah_kerja');
+                kabkoSelect.empty();
+                kabkoSelect.append('<option value="" disabled selected>Pilih Kabupaten/Kota</option>');
+
+                if (kabupatenKotaOptions[selectedProvinsi]) {
+                    kabupatenKotaOptions[selectedProvinsi].forEach(function(kabko) {
+                        kabkoSelect.append(new Option(kabko, kabko));
+                    });
+                }
+            });
+
             $('#kabupaten_kota').on('change', function() {
                 const kabupatenKota = $(this).val();
                 const kecamatanSelect = $('#kecamatan');

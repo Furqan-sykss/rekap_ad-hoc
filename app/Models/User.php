@@ -6,20 +6,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    use HasApiTokens, HasFactory, Notifiable;
+
+    public const ADMIN = 1;
+    public const OPERATOR = 2;
+
     protected $fillable = [
         'name',
         'email',
-        'password',
         'nik',
         'tempat_lahir',
         'tanggal_lahir',
@@ -34,7 +40,12 @@ class User extends Authenticatable
         'kecamatan',
         'kelurahan',
         'agama',
+        'password',
+        'level',
+        'provinsi_wilayah_kerja',
+        'kabko_wilayah_kerja',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

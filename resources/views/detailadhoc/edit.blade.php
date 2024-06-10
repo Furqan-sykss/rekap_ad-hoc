@@ -1,203 +1,148 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container mt-5">
+        <h1>Edit Detail Badan Ad/hoc</h1>
 
-    <div class="container-fluid">
-        <div class="col-12">
-            <div class="row">
-
-                <h1 class="my-4 text-dark mt-3 mb-3">Detail Badan Ad/hoc</h1>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </div>
-        <a href="{{ route('badan_adhoc_details.create') }}" class="btn btn-primary mb-4">Tambah Detail</a>
+        @endif
 
-
-        <form method="GET" action="{{ route('badan_adhoc_details.index') }}" class="mb-4">
+        <form action="{{ route('badan_adhoc_details.update', $detail->id) }}" method="POST">
+            @csrf
+            @method('PUT')
             <div class="row">
-                <div class="col-md-3">
-                    <label>Posisi</label>
-                    <select name="posisi" class="form-control">
-                        <option value="">Semua</option>
-                        <option value="PPK" {{ request('posisi') == 'PPK' ? 'selected' : '' }}>PPK</option>
-                        <option value="PPS" {{ request('posisi') == 'PPS' ? 'selected' : '' }}>PPS</option>
-                    </select>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label>Nama</label>
+                        <input type="text" name="nama" class="form-control" value="{{ $detail->nama }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Posisi</label>
+                        <select name="posisi" class="form-control" required>
+                            <option value="PPK" {{ $detail->posisi == 'PPK' ? 'selected' : '' }}>PPK</option>
+                            <option value="PPS" {{ $detail->posisi == 'PPS' ? 'selected' : '' }}>PPS</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Pekerjaan</label>
+                        <input type="text" name="pekerjaan" class="form-control" value="{{ $detail->pekerjaan }}"
+                            required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Pendidikan Terakhir</label>
+                        <input type="text" name="pendidikan_terakhir" class="form-control"
+                            value="{{ $detail->pendidikan_terakhir }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Program Studi</label>
+                        <input type="text" name="program_studi" class="form-control" value="{{ $detail->program_studi }}"
+                            required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ $detail->email }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>NIK</label>
+                        <input type="text" name="nik" class="form-control" value="{{ $detail->nik }}" required>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label>Kabupaten/Kota</label>
-                    <select name="kabupaten_kota" id="kabupaten_kota" class="form-control">
-                        <option value="">Semua</option>
-                        <option value="Banda Aceh" {{ request('kabupaten_kota') == 'Banda Aceh' ? 'selected' : '' }}>Banda
-                            Aceh</option>
-                        <option value="Lhokseumawe" {{ request('kabupaten_kota') == 'Lhokseumawe' ? 'selected' : '' }}>
-                            Lhokseumawe</option>
-                        <option value="Langsa" {{ request('kabupaten_kota') == 'Langsa' ? 'selected' : '' }}>Langsa</option>
-                        <option value="Sabang" {{ request('kabupaten_kota') == 'Sabang' ? 'selected' : '' }}>Sabang</option>
-                        <!-- Tambahkan kabupaten/kota lain di Aceh -->
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label>Kecamatan</label>
-                    <select name="kecamatan" id="kecamatan" class="form-control">
-                        <!-- Kecamatan akan diisi dengan JavaScript berdasarkan kabupaten/kota yang dipilih -->
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label>Kelurahan</label>
-                    <select name="kelurahan" id="kelurahan" class="form-control">
-                        <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label>TPS</label>
-                    <select name="tps" id="tps" class="form-control">
-                        <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
-                    </select>
-                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label>Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control" value="{{ $detail->tempat_lahir }}"
+                            required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" class="form-control"
+                            value="{{ $detail->tanggal_lahir }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>No BPJS Kesehatan</label>
+                        <input type="text" name="no_bpjs_kesehatan" class="form-control"
+                            value="{{ $detail->no_bpjs_kesehatan }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>No BPJS Ketenagakerjaan</label>
+                        <input type="text" name="no_bpjs_ketenagakerjaan" class="form-control"
+                            value="{{ $detail->no_bpjs_ketenagakerjaan }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>NPWP</label>
+                        <input type="text" name="npwp" class="form-control" value="{{ $detail->npwp }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>No HP</label>
+                        <input type="text" name="no_hp" class="form-control" value="{{ $detail->no_hp }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Jenis Kelamin</label>
+                        <select name="jenis_kelamin" class="form-control" required>
+                            <option value="Laki-laki" {{ $detail->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>
+                                Laki-laki</option>
+                            <option value="Perempuan" {{ $detail->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>
+                                Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Alamat</label>
+                        <textarea name="alamat" class="form-control" required>{{ $detail->alamat }}</textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Provinsi</label>
+                        <select class="form-control" name="provinsi" id="provinsi" required>
+                            <option value="Aceh">Aceh</option>
+                            <!-- Tambahkan provinsi lain jika diperlukan -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Kabupaten/Kota</label>
+                        <select class="form-control" name="kabupaten_kota" id="kabupaten_kota" required>
+                            <option value="Banda Aceh">Banda Aceh</option>
+                            <option value="Lhokseumawe">Lhokseumawe</option>
+                            <option value="Langsa">Langsa</option>
+                            <option value="Sabang">Sabang</option>
+                            <!-- Tambahkan kabupaten/kota lain di Aceh -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Kecamatan</label>
+                        <select class="form-control" name="kecamatan" id="kecamatan" required>
+                            <!-- Kecamatan akan diisi dengan JavaScript berdasarkan kabupaten/kota yang dipilih -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Kelurahan</label>
+                        <select class="form-control" name="kelurahan" id="kelurahan" required>
+                            <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
+                        </select>
+                    </div>
 
-                <div class="col-md-12 mt-2 ">
-                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <div class="form-group mb-3">
+                        <label>TPS</label>
+                        <select class="form-control" name="tps" id="tps" required>
+                            <!-- Kelurahan akan diisi dengan JavaScript berdasarkan kecamatan yang dipilih -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Agama</label>
+                        <input type="text" name="agama" class="form-control" value="{{ $detail->agama }}"
+                            required>
+                    </div>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </form>
-
-
-        {{-- <div class="row mb-4 text-light bg-rounded-full" style="background-color: #0e2238;">
-            <div class="col-md-12">
-                <h5>Total Keseluruhan Data: {{ $totalDetailsCount }}</h5>
-            </div>
-            <div class="col-md-12">
-                <h5>Data yang Dipilih: {{ $filteredDetailsCount }}</h5>
-            </div>
-        </div> --}}
-
-
-        <div class="card"style="background-color: #0e2238;  border-radius: 15px; padding: 20px;">
-            <div class="row  text-light bg-rounded-full">
-                <div class="col-md-12">
-                    <h5>Total Keseluruhan Data: {{ $totalDetailsCount }}</h5>
-                </div>
-                <div class="col-md-12">
-                    <h5>Data yang Dipilih: {{ $filteredDetailsCount }}</h5>
-                </div>
-                <div class="col-md-6 mt-3 ">
-                    <button onclick="window.location.href='{{ route('badan_adhoc_details.index') }}'"
-                        class="btn btn-secondary">Refresh Page</button>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nama</th>
-                        <th>Posisi</th>
-                        <th>Alamat</th>
-                        <th>Provinsi</th>
-                        <th>Kota</th>
-                        <th>Kecamatan</th>
-                        <th>Kelurahan</th>
-                        <th>TPS</th>
-                        <th>Tempat, Tanggal Lahir</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Agama</th>
-                        <th>Pekerjaan</th>
-                        <th>Pendidikan Terakhir</th>
-                        <th>Program Studi</th>
-                        <th>Email</th>
-                        <th>NIK</th>
-                        <th>No BPJS Kesehatan</th>
-                        <th>No BPJS Ketenagakerjaan</th>
-                        <th>NPWP</th>
-                        <th>No HP</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($details->isEmpty())
-                        <tr style="background-color: red;" class="">
-                            <td colspan="20" class="text-start text-light pt-3 pb-3">
-                                <b>
-                                    {{-- <marquee scrollamount="10" behavior="alternate">Data Tidak Tersedia
-                                    </marquee> --}}
-                                    Data Tidak Tersedia
-                                </b>
-                            </td>
-                        </tr>
-                    @else
-                        @foreach ($details as $detail)
-                            <tr>
-                                <td>{{ $detail->nama }}</td>
-                                <td>{{ $detail->posisi }}</td>
-                                <td>{{ $detail->alamat }}</td>
-                                <td>{{ $detail->provinsi }}</td>
-                                <td>{{ $detail->kabupaten_kota }}</td>
-                                <td>{{ $detail->kecamatan }}</td>
-                                <td>{{ $detail->kelurahan }}</td>
-                                <td>{{ $detail->tps }}</td>
-                                <td>{{ $detail->tempat_lahir }}, {{ $detail->tanggal_lahir }}</td>
-                                <td>{{ $detail->jenis_kelamin }}</td>
-                                <td>{{ $detail->agama }}</td>
-                                <td>{{ $detail->pekerjaan }}</td>
-                                <td>{{ $detail->pendidikan_terakhir }}</td>
-                                <td>{{ $detail->program_studi }}</td>
-                                <td>{{ $detail->email }}</td>
-                                <td>{{ $detail->nik }}</td>
-                                <td>{{ $detail->no_bpjs_kesehatan }}</td>
-                                <td>{{ $detail->no_bpjs_ketenagakerjaan }}</td>
-                                <td>{{ $detail->npwp }}</td>
-                                <td>{{ $detail->no_hp }}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal" data-id="{{ $detail->id }}">Hapus</button>
-                                    <a href="{{ route('badan_adhoc_details.edit', $detail->id) }}"
-                                        class="btn btn-primary btn-sm">Edit</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
     </div>
 
-    <!-- Modal Delete -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus detail ini?
-                </div>
-                <div class="modal-footer">
-                    <form id="deleteForm" method="POST" action="">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var deleteModal = document.getElementById('deleteModal');
-            deleteModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-                var id = button.getAttribute('data-id');
-                var form = deleteModal.querySelector('#deleteForm');
-                form.action = '/detail_badan_adhoc/' + id;
-            });
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         const kecamatanOptions = {
             "Banda Aceh": ["Baiturrahman", "Banda Raya", "Jaya Baru", "Kuta Alam", "Kuta Raja", "Lueng Bata", "Meuraxa",
@@ -515,92 +460,80 @@
             "Gampong Ujong Kareung": ["TPS 1", "TPS 2"]
         };
 
-
-
         $(document).ready(function() {
-            $('#kabupaten_kota').on('change', function() {
-                const kabupatenKota = $(this).val();
-                const kecamatanSelect = $('#kecamatan');
-                const kelurahanSelect = $('#kelurahan');
-                const tpsSelect = $('#tps');
+            const kecamatanSelect = $('#kecamatan');
+            const kelurahanSelect = $('#kelurahan');
+            const tpsSelect = $('#tps');
 
+            $('#kabupaten_kota').on('change', function() {
+                const selectedKota = $(this).val();
                 kecamatanSelect.empty().append('<option value="">Pilih Kecamatan</option>');
                 kelurahanSelect.empty().append('<option value="">Pilih Kelurahan</option>');
                 tpsSelect.empty().append('<option value="">Pilih TPS</option>');
 
-                if (kecamatanOptions[kabupatenKota]) {
-                    kecamatanOptions[kabupatenKota].forEach(function(kecamatan) {
+                console.log('Selected Kota: ', selectedKota);
+                console.log('Available Kecamatan: ', kecamatanOptions[selectedKota]);
+
+                if (kecamatanOptions[selectedKota]) {
+                    kecamatanOptions[selectedKota].forEach(function(kecamatan) {
                         kecamatanSelect.append(new Option(kecamatan, kecamatan));
                     });
                 }
             });
 
-            $('#kecamatan').on('change', function() {
-                const kecamatan = $(this).val();
-                const kelurahanSelect = $('#kelurahan');
-                const tpsSelect = $('#tps');
-
+            kecamatanSelect.on('change', function() {
+                const selectedKecamatan = $(this).val();
                 kelurahanSelect.empty().append('<option value="">Pilih Kelurahan</option>');
                 tpsSelect.empty().append('<option value="">Pilih TPS</option>');
 
-                if (kelurahanOptions[kecamatan]) {
-                    kelurahanOptions[kecamatan].forEach(function(kelurahan) {
+                console.log('Selected Kecamatan: ', selectedKecamatan);
+                console.log('Available Kelurahan: ', kelurahanOptions[selectedKecamatan]);
+
+                if (kelurahanOptions[selectedKecamatan]) {
+                    kelurahanOptions[selectedKecamatan].forEach(function(kelurahan) {
                         kelurahanSelect.append(new Option(kelurahan, kelurahan));
                     });
                 }
             });
 
-            $('#kelurahan').on('change', function() {
-                const kelurahan = $(this).val();
-                const tpsSelect = $('#tps');
-
+            kelurahanSelect.on('change', function() {
+                const selectedKelurahan = $(this).val();
                 tpsSelect.empty().append('<option value="">Pilih TPS</option>');
 
-                if (tpsOptions[kelurahan]) {
-                    tpsOptions[kelurahan].forEach(function(tps) {
+                console.log('Selected Kelurahan: ', selectedKelurahan);
+                console.log('Available TPS: ', tpsOptions[selectedKelurahan]);
+
+                if (tpsOptions[selectedKelurahan]) {
+                    tpsOptions[selectedKelurahan].forEach(function(tps) {
                         tpsSelect.append(new Option(tps, tps));
                     });
                 }
             });
 
-            // Set initial kecamatan and kelurahan based on current filters
-            @if (request('kabupaten_kota'))
-                const currentKabupatenKota = '{{ request('kabupaten_kota') }}';
-                const currentKecamatan = '{{ request('kecamatan') }}';
-                const currentKelurahan = '{{ request('kelurahan') }}';
-                const currentTps = '{{ request('tps') }}';
+            // Set initial values if available
+            const initialKota = '{{ $detail->kabupaten_kota }}';
+            const initialKecamatan = '{{ $detail->kecamatan }}';
+            const initialKelurahan = '{{ $detail->kelurahan }}';
+            const initialTPS = '{{ $detail->tps }}';
 
-                $('#kabupaten_kota').val(currentKabupatenKota).trigger('change');
-                if (currentKecamatan) {
-                    setTimeout(function() {
-                        $('#kecamatan').val(currentKecamatan).trigger('change');
-                        if (currentKelurahan) {
-                            setTimeout(function() {
-                                $('#kelurahan').val(currentKelurahan).trigger('change');
-                                if (currentTps) {
-                                    setTimeout(function() {
-                                        $('#tps').val(currentTps);
+            if (initialKota) {
+                $('#kabupaten_kota').val(initialKota).trigger('change');
+                if (initialKecamatan) {
+                    setTimeout(() => {
+                        kecamatanSelect.val(initialKecamatan).trigger('change');
+                        if (initialKelurahan) {
+                            setTimeout(() => {
+                                kelurahanSelect.val(initialKelurahan).trigger('change');
+                                if (initialTPS) {
+                                    setTimeout(() => {
+                                        tpsSelect.val(initialTPS);
                                     }, 500);
                                 }
                             }, 500);
                         }
                     }, 500);
                 }
-            @endif
+            }
         });
     </script>
-
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sukses',
-                    text: '{{ session('success') }}',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-            });
-        </script>
-    @endif
 @endsection

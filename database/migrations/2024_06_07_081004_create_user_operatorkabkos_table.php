@@ -8,10 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user_operatorkabkos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password');
             $table->string('nik', 16)->unique();
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
@@ -26,17 +27,16 @@ return new class extends Migration
             $table->string('kecamatan');
             $table->string('kelurahan');
             $table->string('agama');
-            $table->enum('level', ['1', '2'])->default('2'); // level 1 untuk admin, level 2 untuk operator kabko
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('provinsi_wilayah_kerja');
+            $table->string('kabko_wilayah_kerja');
             $table->timestamps();
+            $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_operatorkabkos');
     }
 };
